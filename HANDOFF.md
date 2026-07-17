@@ -1,5 +1,64 @@
 # HANDOFF.md
 
+## 0. 최신 구현 인수인계 (2026-07-17)
+
+이 섹션이 아래의 초기 문서 단계 설명보다 우선한다.
+
+### Git 및 작업 위치
+
+- GitHub: `https://github.com/project99hong-ai/youngdong_superpowers_test.git`
+- 현재 브랜치: `codex/ttokttok-mvp-ascii`
+- 구현 worktree: `C:\tmp\ttokttok-mvp`
+- Flutter SDK: `C:\tmp\flutter\bin\flutter.bat` (Flutter 3.44.6, Dart 3.12.2)
+- OneDrive의 한글 경로에서는 Flutter 생성/테스트가 멈추는 문제가 있어 ASCII worktree를 사용한다.
+- `.env`, `.env.local`은 읽거나 수정하거나 출력하지 않는다.
+- 이 폴더에서는 LazyCodex/OmO 스킬, 플러그인, 하네스를 사용하지 않고 Superpowers SDD 방식으로 진행한다.
+
+### 완료된 Task
+
+| Task | 결과 | 커밋 |
+| --- | --- | --- |
+| 1 | Flutter Web/Android/iOS 스캐폴드와 앱 셸 | `2ca4200`, `c98529a` |
+| 2 | `DemoState`, 미션, 완료, 보상, AI report 모델과 JSON 직렬화 | `1bec7b9` |
+| 3 | SharedPreferences 저장 서비스와 `DemoRepository`/`LocalDemoRepository` | `f011110` |
+| 4 | repository 기반 역할 선택, 역할 영속화, 임시 홈, 역할 초기화 | `d043189` |
+
+Task 4는 원래 구현 계획의 AI 서비스 Task 4보다 사용자의 최신 요청을 우선해 역할 선택 흐름으로 변경됐다. AI API 및 fallback 서비스는 아직 구현하지 않았다.
+
+### 현재 동작
+
+1. 앱 시작 시 `LocalDemoRepository`에서 `DemoState`를 불러온다.
+2. role이 없으면 `자녀로 시작`, `시니어로 시작` 화면을 표시한다.
+3. 선택한 role을 SharedPreferences에 저장하고 역할별 임시 홈을 표시한다.
+4. 브라우저 새로고침 또는 새 repository 인스턴스에서도 role이 유지된다.
+5. `역할 다시 선택`으로 데모 상태를 초기화하고 역할 선택으로 돌아간다.
+6. 미션 및 AI report 모델은 저장 가능한 상태지만 관련 UI와 AI 호출은 아직 없다.
+
+### 최신 검증
+
+- 관련 역할 흐름 테스트: 12/12 통과
+- 전체 `flutter test`: 12/12 통과
+- `flutter analyze`: `No issues found`
+- 독립 Task 4 리뷰: Critical/Important/Minor 없음, `Task quality: Approved`
+- Flutter Web 수동 검증: 역할 선택 -> 자녀 홈 -> 새로고침 후 role 유지 -> 역할 초기화 확인
+- 로컬 데모 URL: `http://127.0.0.1:7357/` (서버 실행 중일 때만 접근 가능)
+
+### 실행 명령
+
+```powershell
+cd C:\tmp\ttokttok-mvp\app
+& C:\tmp\flutter\bin\flutter.bat test
+& C:\tmp\flutter\bin\flutter.bat analyze
+& C:\tmp\flutter\bin\flutter.bat run -d web-server --web-hostname 127.0.0.1 --web-port 7357
+```
+
+### 다음 작업 시작점
+
+- 구현 진행 원장: `C:\tmp\ttokttok-mvp\.superpowers\sdd\progress.md`
+- 다음 에이전트는 먼저 `AGENTS.md`, 이 섹션, 진행 원장을 읽고 현재 Git 상태를 확인한다.
+- 다음 기능도 fresh implementer -> TDD RED -> GREEN -> 전체 검증 -> 독립 리뷰 -> 커밋 순서로 진행한다.
+- 다음 우선 후보는 자녀 미션 설정 화면과 repository 연결이다. AI 서비스 Task는 역할/미션 흐름 이후 별도로 재배치해야 한다.
+
 ## 1. 현재 상태
 
 - 이 폴더는 `똑똑용돈` MVP를 만들기 위한 문서 중심 작업 공간이다.
