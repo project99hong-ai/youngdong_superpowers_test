@@ -146,7 +146,7 @@ class DemoState {
     required this.aiReport,
   });
 
-  final UserRole selectedRole;
+  final UserRole? selectedRole;
   final Mission mission;
   final MissionCompletion completion;
   final RewardStatus reward;
@@ -161,7 +161,7 @@ class DemoState {
       targetPoints: 300,
     );
     return DemoState(
-      selectedRole: UserRole.child,
+      selectedRole: null,
       mission: mission,
       completion: const MissionCompletion(
         id: 'completion-memory-quiz',
@@ -197,7 +197,7 @@ class DemoState {
   }
 
   Map<String, dynamic> toJson() => {
-        'selectedRole': selectedRole.name,
+        'selectedRole': selectedRole?.name,
         'mission': mission.toJson(),
         'completion': completion.toJson(),
         'reward': reward.toJson(),
@@ -205,8 +205,9 @@ class DemoState {
       };
 
   factory DemoState.fromJson(Map<String, dynamic> json) => DemoState(
-        selectedRole:
-            UserRole.values.byName(json['selectedRole'] as String),
+        selectedRole: json['selectedRole'] == null
+            ? null
+            : UserRole.values.byName(json['selectedRole'] as String),
         mission: Mission.fromJson(json['mission'] as Map<String, dynamic>),
         completion: MissionCompletion.fromJson(
           json['completion'] as Map<String, dynamic>,

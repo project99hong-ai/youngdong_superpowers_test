@@ -3,10 +3,10 @@ import 'package:ttokttok_allowance_mvp/models/ai_report.dart';
 import 'package:ttokttok_allowance_mvp/models/demo_state.dart';
 
 void main() {
-  test('initial state contains default demo mission and zero points', () {
+  test('initial state has no selected role and contains default demo data', () {
     final state = DemoState.initial();
 
-    expect(state.selectedRole, UserRole.child);
+    expect(state.selectedRole, isNull);
     expect(state.mission.title, '기억 퀴즈 미션');
     expect(state.mission.rewardPoints, 100);
     expect(state.reward.currentPoints, 0);
@@ -14,7 +14,7 @@ void main() {
     expect(state.aiReport, isNull);
   });
 
-  test('state round trips through json', () {
+  test('state with no role round trips through json', () {
     final report = AiReport(
       id: 'report-1',
       summary: '이번 주는 미션을 1회 완료했습니다.',
@@ -27,6 +27,8 @@ void main() {
 
     final restored = DemoState.fromJson(state.toJson());
 
+    expect(state.toJson()['selectedRole'], isNull);
+    expect(restored.selectedRole, isNull);
     expect(restored.aiReport?.summary, report.summary);
     expect(restored.aiReport?.source, AiReportSource.fallback);
     expect(restored.mission.targetPoints, 300);

@@ -15,7 +15,7 @@ void main() {
 
     final state = await repository.loadState();
 
-    expect(state.selectedRole, UserRole.child);
+    expect(state.selectedRole, isNull);
     expect(state.mission.title, '기억 퀴즈 미션');
     expect(state.reward.currentPoints, 0);
     expect(state.reward.allowanceStatus, AllowanceStatus.pending);
