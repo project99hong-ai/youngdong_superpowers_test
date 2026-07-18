@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'controllers/demo_controller.dart';
-import 'models/demo_state.dart';
 import 'repositories/demo_repository.dart';
 import 'screens/role_home_screen.dart';
 import 'screens/role_select_screen.dart';

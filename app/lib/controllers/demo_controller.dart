@@ -6,9 +6,9 @@ import '../repositories/demo_repository.dart';
 enum DemoStatus { loading, ready, error }
 
 class DemoController extends ChangeNotifier {
-  DemoController({required DemoRepository repository}) : _repository = repository;
+  DemoController({required this.repository});
 
-  final DemoRepository _repository;
+  final DemoRepository repository;
 
   DemoStatus _status = DemoStatus.loading;
   DemoState? _state;
@@ -18,12 +18,12 @@ class DemoController extends ChangeNotifier {
   UserRole? get selectedRole => _state?.selectedRole;
   Object? get error => _error;
 
-  Future<void> load() => _update(_repository.loadState);
+  Future<void> load() => _update(repository.loadState);
 
   Future<void> selectRole(UserRole role) =>
-      _update(() => _repository.selectRole(role));
+      _update(() => repository.selectRole(role));
 
-  Future<void> resetRole() => _update(_repository.resetDemo);
+  Future<void> resetRole() => _update(repository.resetDemo);
 
   Future<void> _update(Future<DemoState> Function() action) async {
     _status = DemoStatus.loading;

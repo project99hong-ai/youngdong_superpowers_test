@@ -120,15 +120,9 @@ void main() {
 }
 
 class _FakeWidgetDemoRepository implements DemoRepository {
-  _FakeWidgetDemoRepository({
-    this.loadStateHandler,
-    this.selectRoleHandler,
-    this.resetDemoHandler,
-  });
+  _FakeWidgetDemoRepository({this.loadStateHandler});
 
   final Future<DemoState> Function()? loadStateHandler;
-  final Future<DemoState> Function(UserRole role)? selectRoleHandler;
-  final Future<DemoState> Function()? resetDemoHandler;
 
   @override
   Future<DemoState> loadState() => loadStateHandler != null
@@ -136,14 +130,11 @@ class _FakeWidgetDemoRepository implements DemoRepository {
       : Future.value(DemoState.initial());
 
   @override
-  Future<DemoState> selectRole(UserRole role) => selectRoleHandler != null
-      ? selectRoleHandler!(role)
-      : Future.value(DemoState.initial().copyWith(selectedRole: role));
+  Future<DemoState> selectRole(UserRole role) =>
+      Future.value(DemoState.initial().copyWith(selectedRole: role));
 
   @override
-  Future<DemoState> resetDemo() => resetDemoHandler != null
-      ? resetDemoHandler!()
-      : Future.value(DemoState.initial());
+  Future<DemoState> resetDemo() => Future.value(DemoState.initial());
 
   @override
   Future<DemoState> saveMission({
