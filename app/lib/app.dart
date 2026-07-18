@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'controllers/demo_controller.dart';
 import 'models/demo_state.dart';
 import 'repositories/demo_repository.dart';
 import 'screens/role_home_screen.dart';
@@ -38,44 +39,62 @@ class _AppStateCoordinator extends StatefulWidget {
 }
 
 class _AppStateCoordinatorState extends State<_AppStateCoordinator> {
-  late Future<DemoState> _state;
+  late final DemoController _controller;
 
   @override
   void initState() {
     super.initState();
-    _state = widget.repository.loadState();
+    _controller = DemoController(repository: widget.repository);
+    _controller.addListener(_onControllerChanged);
+    _controller.load();
   }
 
-  void _selectRole(UserRole role) {
-    setState(() {
-      _state = widget.repository.selectRole(role);
-    });
+  void _onControllerChanged() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
-  void _resetRole() {
-    setState(() {
-      _state = widget.repository.resetDemo();
-    });
+  @override
+  void dispose() {
+    _controller.removeListener(_onControllerChanged);
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DemoState>(
-      future: _state,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final role = snapshot.data!.selectedRole;
+    switch (_controller.status) {
+      case DemoStatus.loading:
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(key: Key('demo-loading-indicator')),
+          ),
+        );
+      case DemoStatus.error:
+        return Scaffold(
+          body: Center(
+            child: Column(
+              key: const Key('demo-error-state'),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('데모 상태를 불러오지 못했어요.'),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  key: const Key('demo-retry-button'),
+                  onPressed: _controller.load,
+                  child: const Text('다시 시도'),
+                ),
+              ],
+            ),
+          ),
+        );
+      case DemoStatus.ready:
+        final role = _controller.selectedRole;
         if (role == null) {
-          return RoleSelectScreen(onRoleSelected: _selectRole);
+          return RoleSelectScreen(onRoleSelected: _controller.selectRole);
         }
-
-        return RoleHomeScreen(role: role, onReset: _resetRole);
-      },
-    );
+        return RoleHomeScreen(role: role, onReset: _controller.resetRole);
+    }
   }
 }

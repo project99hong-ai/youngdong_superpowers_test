@@ -8,7 +8,7 @@ class RoleSelectScreen extends StatelessWidget {
     super.key,
   });
 
-  final ValueChanged<UserRole> onRoleSelected;
+  final Future<void> Function(UserRole) onRoleSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,13 @@ class RoleSelectScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
+                key: const Key('role-select-child-button'),
                 onPressed: () => onRoleSelected(UserRole.child),
                 child: const Text('자녀로 시작'),
               ),
               const SizedBox(height: 12),
               ElevatedButton(
+                key: const Key('role-select-senior-button'),
                 onPressed: () => onRoleSelected(UserRole.senior),
                 child: const Text('시니어로 시작'),
               ),

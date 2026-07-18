@@ -10,13 +10,14 @@ class RoleHomeScreen extends StatelessWidget {
   });
 
   final UserRole role;
-  final VoidCallback onReset;
+  final Future<void> Function() onReset;
 
   @override
   Widget build(BuildContext context) {
     final roleName = role == UserRole.child ? '자녀' : '시니어';
 
     return Scaffold(
+      key: Key('role-home-${role.name}'),
       appBar: AppBar(title: const Text('똑똑용돈')),
       body: Center(
         child: Column(
@@ -28,6 +29,7 @@ class RoleHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             OutlinedButton(
+              key: const Key('role-home-reset-button'),
               onPressed: onReset,
               child: const Text('역할 다시 선택'),
             ),
