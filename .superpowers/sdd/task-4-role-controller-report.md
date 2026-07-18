@@ -51,7 +51,7 @@ Commands run from `app/` in this turn:
 
 ## Follow-up Review and Re-review Status
 
-- A follow-up review found three process/documentation issues: the unresolved literal `FINAL_COMMIT_SHA`, a stale independent-review approval claim in `HANDOFF.md`, and no direct evidence of the original chronological test-first RED step.
+- A follow-up review found three process/documentation issues: an unresolved final-commit SHA placeholder, a stale independent-review approval claim in `HANDOFF.md`, and no direct evidence of the original chronological test-first RED step.
 - This follow-up corrects the documentation and adds reproducible post-implementation RED/restore validation. Independent Task 4 re-review is pending; the earlier approval/no-findings claim is superseded.
 
 ## Post-implementation RED/restore Validation (2026-07-18)
@@ -65,7 +65,7 @@ Commands run from `app/` in this turn:
 ## Follow-up Documentation Fix
 
 - Replaced the literal final-commit placeholder, corrected the stale handoff review claim, and updated the task-progress state to follow-up re-review pending.
-- The SHA for this follow-up documentation-fix commit will be appended after it is created.
+- Follow-up documentation-fix commit: `bfd5bcea6b5a32214911e6f5f550afa40d0cb546` (`docs: correct task 4 review evidence`).
 
 ## Changed Files
 
