@@ -13,6 +13,7 @@ class DemoController extends ChangeNotifier {
   DemoStatus _status = DemoStatus.loading;
   DemoState? _state;
   Object? _error;
+  var _isDisposed = false;
 
   DemoStatus get status => _status;
   UserRole? get selectedRole => _state?.selectedRole;
@@ -26,18 +27,35 @@ class DemoController extends ChangeNotifier {
   Future<void> resetRole() => _update(repository.resetDemo);
 
   Future<void> _update(Future<DemoState> Function() action) async {
+    if (_isDisposed) {
+      return;
+    }
+
     _status = DemoStatus.loading;
     _error = null;
     notifyListeners();
 
     try {
-      _state = await action();
+      final state = await action();
+      if (_isDisposed) {
+        return;
+      }
+      _state = state;
       _status = DemoStatus.ready;
     } catch (error) {
+      if (_isDisposed) {
+        return;
+      }
       _state = null;
       _error = error;
       _status = DemoStatus.error;
     }
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
   }
 }

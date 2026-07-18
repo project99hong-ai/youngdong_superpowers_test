@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ttokttok_allowance_mvp/controllers/demo_controller.dart';
 import 'package:ttokttok_allowance_mvp/models/ai_report.dart';
@@ -68,6 +70,25 @@ void main() {
     expect(controller.status, DemoStatus.error);
     expect(controller.error, isA<StateError>());
     expect(controller.selectedRole, isNull);
+  });
+
+  test('load does not notify after disposal when a pending load completes', () async {
+    final completer = Completer<DemoState>();
+    final controller = DemoController(
+      repository: _FakeDemoRepository(
+        loadStateHandler: () => completer.future,
+      ),
+    );
+    var notifications = 0;
+    controller.addListener(() => notifications += 1);
+
+    final load = controller.load();
+    controller.dispose();
+    completer.complete(DemoState.initial());
+
+    await load;
+
+    expect(notifications, 1);
   });
 }
 
