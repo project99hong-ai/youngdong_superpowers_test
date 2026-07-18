@@ -135,3 +135,31 @@ Commands run from `app/` in this turn:
   - `HANDOFF.md`
   - `progress.md`
   - `.superpowers/sdd/task-4-role-controller-report.md`
+
+## Documentation Consolidation Follow-up (2026-07-18)
+
+### Consolidation Result
+
+- `.superpowers/sdd/progress.md` now carries the full Task 4 ledger through `808f72e`, the current verification counts, the follow-up review result, and the precise process-compliance exception.
+- `HANDOFF.md` now points future agents to the SDD ledger and this canonical report for Task 4 status, and it no longer implies unconditional independent approval.
+- `.superpowers/sdd/task-4-report.md` is explicitly marked superseded and preserved only as historical context.
+- `progress.md` now mirrors the consolidation outcome and states that the remaining issue is process-compliance only, not a functional/code defect.
+
+### Consolidation Evidence
+
+- SDD ledger update commit lineage now explicitly includes:
+  - `9cfbdf6` - verification-SHA documentation update
+  - `bfd5bcea6b5a32214911e6f5f550afa40d0cb546` - review-evidence correction
+  - `7b5e5ca` - review-fix SHA documentation update
+  - `808f72e` - disposal-fix evidence documentation update
+- Current authoritative verification set remains:
+  - focused controller/widget tests: 11/11 passed
+  - full `flutter test`: 19/19 passed
+  - `flutter analyze`: clean (`No issues found!`)
+
+### Final Review Exception
+
+- Unresolved item: one process-compliance exception remains for the original Task 4 controller implementation.
+- Exact exception: historic chronological RED-before-production evidence is unavailable.
+- Scope limit: post-implementation RED/restore validates that the focused tests depend on `demo_controller.dart` and that restored production code passes, but it does not prove the original RED happened before production implementation.
+- Review impact: this exception blocks unconditional independent approval wording, but it does not identify a live functional or code defect in the current Task 4 branch state.

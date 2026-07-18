@@ -55,7 +55,9 @@ cd C:\tmp\ttokttok-mvp\app
 ### 다음 작업 시작점
 
 - 구현 진행 원장: `C:\tmp\ttokttok-mvp\.superpowers\sdd\progress.md`
+- Task 4 현재 근거 문서: `C:\tmp\ttokttok-mvp\.superpowers\sdd\task-4-role-controller-report.md`
 - 다음 에이전트는 먼저 `AGENTS.md`, 이 섹션, 진행 원장을 읽고 현재 Git 상태를 확인한다.
+- Task 4 상태 판단은 위 SDD 원장과 canonical report를 기준으로 한다. 이전 승인 표현이나 `task-4-report.md`만 보고 무조건 승인으로 해석하면 안 된다.
 - 다음 기능도 fresh implementer -> TDD RED -> GREEN -> 전체 검증 -> 독립 리뷰 -> 커밋 순서로 진행한다.
 - 다음 우선 후보는 자녀 미션 설정 화면과 repository 연결이다. AI 서비스 Task는 역할/미션 흐름 이후 별도로 재배치해야 한다.
 

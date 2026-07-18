@@ -1,4 +1,8 @@
-# Task 4 Report: Demo Role Controller
+# Superseded: Task 4 Report: Demo Role Controller
+
+This historical report is superseded by `C:\tmp\ttokttok-mvp\.superpowers\sdd\task-4-role-controller-report.md`.
+
+Do not use this file as evidence for current Task 4 status, review disposition, or approval. Keep it only as a preserved historical snapshot.
 
 ## Commit
 

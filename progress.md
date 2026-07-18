@@ -1,12 +1,16 @@
 # Task 4 Progress
 
-Status: Task 4 disposal-safety fix committed; re-review pending.
+Status: Task 4 documentation consolidated; final review still has one unresolved process-compliance exception, not a functional or code defect.
 
 Task 4 commit set:
 
 - Base implementation: `b3fcf4513f6e0acfb3748a066a5c611a36eeb92c`
 - Final verification and cleanup: `73f3ec263dea0c425c1009946df619d565e87433`
+- Verification-SHA documentation update: `9cfbdf6`
+- Review-evidence correction: `bfd5bcea6b5a32214911e6f5f550afa40d0cb546`
+- Review-fix SHA documentation update: `7b5e5ca`
 - Disposal-safety re-review fix: `2d87352` (`fix: guard demo controller disposal`)
+- Disposal-fix evidence documentation update: `808f72e` (`docs: record task 4 disposal fix evidence`)
 
 Previously recorded implementation validation from `app/`:
 
@@ -16,6 +20,11 @@ Previously recorded implementation validation from `app/`:
 - Diff check: `git diff --check` -> exit 0, line-ending warnings only.
 
 Current follow-up review outcome: the earlier independent-review approval/no-findings claim is superseded. The follow-up review found a literal `FINAL_COMMIT_SHA` report placeholder, stale approval wording in `HANDOFF.md`, and no direct evidence of the original chronological test-first RED step.
+
+Documentation consolidation note:
+
+- `.superpowers/sdd/task-4-role-controller-report.md` is the canonical Task 4 evidence report.
+- `.superpowers/sdd/task-4-report.md` is retained only as a superseded historical snapshot and must not be used for current Task 4 status.
 
 Post-implementation RED/restore validation on 2026-07-18:
 
@@ -34,3 +43,9 @@ Latest re-review validation from `app/` on 2026-07-18:
 - Full suite: `flutter test` -> exit 0, 19 tests passed.
 - Analyzer: `flutter analyze` -> exit 0, `No issues found!`.
 - The original Task 4 chronological RED proof remains unavailable under the documented post-implementation RED/restore exception; this new disposal-safety test has direct chronological RED/GREEN evidence.
+
+Final review disposition:
+
+- Functional/code status: no unresolved Task 4 code defect is recorded in the current evidence set.
+- Process/compliance status: one unresolved exception remains because historic chronological RED-before-production evidence is unavailable for the original controller implementation.
+- Post-implementation RED/restore only shows dependency on `demo_controller.dart` and successful restored execution; it does not establish the original RED chronology.
