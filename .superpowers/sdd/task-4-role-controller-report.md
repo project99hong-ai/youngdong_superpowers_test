@@ -49,6 +49,24 @@ Commands run from `app/` in this turn:
 - Verified the final analyzer-cleanup diff does not change behavior, only lint/test-double hygiene.
 - No self-review findings. Independent review remains pending.
 
+## Follow-up Review and Re-review Status
+
+- A follow-up review found three process/documentation issues: the unresolved literal `FINAL_COMMIT_SHA`, a stale independent-review approval claim in `HANDOFF.md`, and no direct evidence of the original chronological test-first RED step.
+- This follow-up corrects the documentation and adds reproducible post-implementation RED/restore validation. Independent Task 4 re-review is pending; the earlier approval/no-findings claim is superseded.
+
+## Post-implementation RED/restore Validation (2026-07-18)
+
+- Copied only `app/` to disposable path `C:\tmp\ttokttok-mvp-red-validation-20260718` and removed only the copy's `lib/controllers/demo_controller.dart`.
+- Ran `flutter test test/controllers/demo_controller_test.dart test/widget_flow_test.dart` in the copy: exit 1. Both focused test files failed to load because `lib/controllers/demo_controller.dart` was missing, with subsequent undefined `DemoController` and `DemoStatus` errors.
+- Destroyed the disposable copy after capturing the failure.
+- Ran the same focused command in the actual `C:\tmp\ttokttok-mvp\app` worktree: exit 0, 10 tests passed, ending with `All tests passed!`.
+- This is post-implementation RED/restore validation only. It demonstrates that the focused tests exercise the required controller and that the restored source passes; it is not historic proof of chronological test-first order.
+
+## Follow-up Documentation Fix
+
+- Replaced the literal final-commit placeholder, corrected the stale handoff review claim, and updated the task-progress state to follow-up re-review pending.
+- The SHA for this follow-up documentation-fix commit will be appended after it is created.
+
 ## Changed Files
 
 - Base implementation commit `b3fcf4513f6e0acfb3748a066a5c611a36eeb92c` changed:
@@ -58,7 +76,7 @@ Commands run from `app/` in this turn:
   - `app/lib/screens/role_home_screen.dart`
   - `app/test/controllers/demo_controller_test.dart`
   - `app/test/widget_flow_test.dart`
-- Final verification/cleanup commit `FINAL_COMMIT_SHA` changes:
+- Final verification/cleanup commit `73f3ec263dea0c425c1009946df619d565e87433` changes:
   - `app/lib/app.dart`
   - `app/lib/controllers/demo_controller.dart`
   - `app/test/widget_flow_test.dart`

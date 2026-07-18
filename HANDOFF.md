@@ -39,7 +39,7 @@ Task 4는 원래 구현 계획의 AI 서비스 Task 4보다 사용자의 최신 
 - 관련 역할 흐름 테스트: 12/12 통과
 - 전체 `flutter test`: 12/12 통과
 - `flutter analyze`: `No issues found`
-- 독립 Task 4 리뷰: Critical/Important/Minor 없음, `Task quality: Approved`
+- 이전의 독립 Task 4 리뷰 승인/무결함 주장은 후속 리뷰에서 발견된 문서 및 RED 프로세스 증거 문제로 대체됐다. 문서 정정과 사후 RED/restore 검증을 반영했으며 Task 4 재리뷰가 대기 중이다.
 - Flutter Web 수동 검증: 역할 선택 -> 자녀 홈 -> 새로고침 후 role 유지 -> 역할 초기화 확인
 - 로컬 데모 URL: `http://127.0.0.1:7357/` (서버 실행 중일 때만 접근 가능)
 
