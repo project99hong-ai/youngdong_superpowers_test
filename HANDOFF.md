@@ -63,9 +63,9 @@ cd C:\tmp\ttokttok-mvp\app
 
 ## 1. 현재 상태
 
-- 이 폴더는 `똑똑용돈` MVP를 만들기 위한 문서 중심 작업 공간이다.
-- 아직 Flutter/ Firebase/ Cloud Functions 구현 코드는 없다.
-- 현재 기준 문서는 `MVP_작업지시서.md`이며, 다음 작업자는 이 문서를 기준으로 실제 MVP 앱 구현을 시작하면 된다.
+- 이 폴더는 `똑똑용돈` MVP 문서와 구현 인수인계를 함께 관리하는 작업 공간이다.
+- 현재 ASCII worktree `C:\tmp\ttokttok-mvp\app`에는 Flutter MVP 구현이 있다. Firebase 및 Cloud Functions 구현은 아직 없다.
+- 현재 기준 문서는 `MVP_작업지시서.md`이며, 다음 작업자는 이 문서와 상단 최신 구현 인수인계 섹션을 기준으로 기존 MVP 앱 구현을 이어서 진행하면 된다.
 - `코드게이트_똑똑용돈 통합 기획안.md`는 제출/설명용 기획안이고, 서비스 배경과 표현을 확인할 때 참고한다.
 - `AGENTS.md`는 작업 규칙, 보안 경계, 검증 규칙을 담고 있으므로 모든 작업 전 먼저 읽는다.
 
@@ -172,7 +172,7 @@ MVP에서는 mock/local persistence로 시작해도 된다.
 ## 11. 다음 에이전트의 첫 작업 제안
 
 1. `AGENTS.md`, `MVP_작업지시서.md`, 이 파일을 다시 읽는다.
-2. Flutter 프로젝트가 없으므로 현재 폴더에 Flutter 앱 구조를 생성할지, 별도 하위 폴더를 만들지 확인한다. 특별한 요청이 없으면 `app/` 하위에 생성하는 편이 문서와 구현을 분리하기 좋다.
+2. Historical note: the original plan assumed no Flutter project existed yet. Current authoritative status is different; continue from the existing Flutter app at `C:\tmp\ttokttok-mvp\app` unless the user explicitly asks for a new structure.
 3. `superpowers` 플러그인을 사용해 작업하고, 작업 시작 시 관련 skill을 먼저 읽는다.
 4. 첫 구현 목표는 `시작 화면 -> 자녀 설정 -> 시니어 미션 완료 -> 포인트 증가 -> 가족 대시보드 -> AI/fallback 리포트` 단일 세로 흐름이다.
 5. 실제 Firebase 연결 전에 local persistence와 mock/proxy 인터페이스를 먼저 만들어 발표 흐름을 고정한다.

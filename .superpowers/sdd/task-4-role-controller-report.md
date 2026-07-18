@@ -140,7 +140,7 @@ Commands run from `app/` in this turn:
 
 ### Consolidation Result
 
-- `.superpowers/sdd/progress.md` now carries the full Task 4 ledger through `808f72e`, the current verification counts, the follow-up review result, and the precise process-compliance exception.
+- `.superpowers/sdd/progress.md` now carries the full Task 4 ledger through reviewed HEAD `e3a29e9`, the current verification counts, the follow-up review result, and the precise process-compliance exception.
 - `HANDOFF.md` now points future agents to the SDD ledger and this canonical report for Task 4 status, and it no longer implies unconditional independent approval.
 - `.superpowers/sdd/task-4-report.md` is explicitly marked superseded and preserved only as historical context.
 - `progress.md` now mirrors the consolidation outcome and states that the remaining issue is process-compliance only, not a functional/code defect.
@@ -152,6 +152,7 @@ Commands run from `app/` in this turn:
   - `bfd5bcea6b5a32214911e6f5f550afa40d0cb546` - review-evidence correction
   - `7b5e5ca` - review-fix SHA documentation update
   - `808f72e` - disposal-fix evidence documentation update
+- Minor follow-up note: a later handoff/ledger correction added reviewed-HEAD commit `e3a29e9` to both progress ledgers and removed the obsolete "no Flutter implementation exists" claim from `HANDOFF.md`.
 - Current authoritative verification set remains:
   - focused controller/widget tests: 11/11 passed
   - full `flutter test`: 19/19 passed

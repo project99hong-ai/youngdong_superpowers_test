@@ -2,7 +2,7 @@
 
 Status: Task 4 documentation consolidated; final review still has one unresolved process-compliance exception, not a functional or code defect.
 
-Task 4 commit set:
+Task 4 commit set through reviewed HEAD `e3a29e9`:
 
 - Base implementation: `b3fcf4513f6e0acfb3748a066a5c611a36eeb92c`
 - Final verification and cleanup: `73f3ec263dea0c425c1009946df619d565e87433`
@@ -11,6 +11,7 @@ Task 4 commit set:
 - Review-fix SHA documentation update: `7b5e5ca`
 - Disposal-safety re-review fix: `2d87352` (`fix: guard demo controller disposal`)
 - Disposal-fix evidence documentation update: `808f72e` (`docs: record task 4 disposal fix evidence`)
+- Documentation consolidation commit at current reviewed HEAD: `e3a29e9`
 
 Previously recorded implementation validation from `app/`:
 
