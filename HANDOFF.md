@@ -21,7 +21,7 @@
 | 1 | Flutter Web/Android/iOS 스캐폴드와 앱 셸 | `2ca4200`, `c98529a` |
 | 2 | `DemoState`, 미션, 완료, 보상, AI report 모델과 JSON 직렬화 | `1bec7b9` |
 | 3 | SharedPreferences 저장 서비스와 `DemoRepository`/`LocalDemoRepository` | `f011110` |
-| 4 | repository 기반 역할 선택, 역할 영속화, 임시 홈, 역할 초기화 | `d043189` |
+| 4 | repository 기반 역할 선택, 역할 영속화, 임시 홈, 역할 초기화, dispose 안전성 보강 | `b3fcf4513f6e0acfb3748a066a5c611a36eeb92c`, `73f3ec263dea0c425c1009946df619d565e87433`, `2d87352` |
 
 Task 4는 원래 구현 계획의 AI 서비스 Task 4보다 사용자의 최신 요청을 우선해 역할 선택 흐름으로 변경됐다. AI API 및 fallback 서비스는 아직 구현하지 않았다.
 
@@ -36,8 +36,8 @@ Task 4는 원래 구현 계획의 AI 서비스 Task 4보다 사용자의 최신 
 
 ### 최신 검증
 
-- 관련 역할 흐름 테스트: 12/12 통과
-- 전체 `flutter test`: 12/12 통과
+- 관련 역할 흐름 테스트: 11/11 통과
+- 전체 `flutter test`: 19/19 통과
 - `flutter analyze`: `No issues found`
 - 이전의 독립 Task 4 리뷰 승인/무결함 주장은 후속 리뷰에서 발견된 문서 및 RED 프로세스 증거 문제로 대체됐다. 문서 정정과 사후 RED/restore 검증을 반영했으며 Task 4 재리뷰가 대기 중이다.
 - Flutter Web 수동 검증: 역할 선택 -> 자녀 홈 -> 새로고침 후 role 유지 -> 역할 초기화 확인

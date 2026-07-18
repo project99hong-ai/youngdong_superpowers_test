@@ -82,3 +82,56 @@ Commands run from `app/` in this turn:
   - `app/test/widget_flow_test.dart`
   - `progress.md`
   - `.superpowers/sdd/task-4-role-controller-report.md`
+
+## Disposal Safety Re-review Fix (2026-07-18)
+
+### Scope
+
+- Review finding: a pending repository Future could complete after `DemoController.dispose()` and call `notifyListeners()`.
+- Added `_isDisposed` lifecycle protection in the controller's shared `_update` path and in `dispose()`. The guards cover pending `load`, `selectRole`, and `resetRole` actions on both success and failure completion paths.
+- Added focused test `load does not notify after disposal when a pending load completes` using a pending `Completer<DemoState>` and a listener count.
+- UI files and UI behavior were not changed.
+
+### TDD Evidence
+
+- RED command from `app/`: `C:\tmp\flutter\bin\flutter.bat test test/controllers/demo_controller_test.dart`
+  - exit 1
+  - New test failed as expected: `A DemoController was used after being disposed.`
+  - Stack located the unguarded completion notification at `package:ttokttok_allowance_mvp/controllers/demo_controller.dart 41:5 DemoController._update`.
+- GREEN command from `app/`: `C:\tmp\flutter\bin\flutter.bat test test/controllers/demo_controller_test.dart`
+  - exit 0
+  - 5 tests passed, including the new disposal-during-load regression test.
+
+### Verification Evidence
+
+- Focused controller/widget command: `C:\tmp\flutter\bin\flutter.bat test test/controllers/demo_controller_test.dart test/widget_flow_test.dart`
+  - exit 0, 11 tests passed.
+- Full suite: `C:\tmp\flutter\bin\flutter.bat test`
+  - exit 0, 19 tests passed.
+- Static analysis: `C:\tmp\flutter\bin\flutter.bat analyze`
+  - exit 0, `No issues found!`.
+- Diff whitespace check before the implementation commit: `git -c safe.directory='C:/tmp/ttokttok-mvp' diff --check`
+  - exit 0; Git emitted only CRLF conversion warnings.
+
+### Flutter Environment Note
+
+- Before elevation, `C:\tmp\flutter\bin\flutter.bat test test/controllers/demo_controller_test.dart` stayed open for more than 65 seconds with no stdout or stderr. A contemporaneous `Get-Process -Name flutter,dart,java` found no matching process. That invocation did not pass and is not verification evidence.
+- Direct Flutter-tool snapshot execution then failed to open `C:\tmp\flutter\bin\cache\lockfile`, reporting that the SDK/project needed read/write access.
+- The recorded RED, GREEN, focused, full-suite, and analyzer commands were rerun with permission to access the Flutter SDK cache lockfile; those are the authoritative results above.
+
+### Documentation and Re-review Status
+
+- `HANDOFF.md` now identifies the actual Task 4 controller commits rather than `d043189`, which is the earlier persisted role-selection-flow commit.
+- `HANDOFF.md` test counts now match current evidence: 11 focused controller/widget tests and 19 full-suite tests.
+- The original Task 4 chronological RED proof remains unavailable under the documented post-implementation RED/restore exception. This disposal-safety fix has direct chronological RED then GREEN evidence.
+- Independent Task 4 re-review remains pending.
+
+### Commit and Changed Files
+
+- Implementation commit: `2d87352` (`fix: guard demo controller disposal`).
+- Changed files for this re-review fix:
+  - `app/lib/controllers/demo_controller.dart`
+  - `app/test/controllers/demo_controller_test.dart`
+  - `HANDOFF.md`
+  - `progress.md`
+  - `.superpowers/sdd/task-4-role-controller-report.md`
