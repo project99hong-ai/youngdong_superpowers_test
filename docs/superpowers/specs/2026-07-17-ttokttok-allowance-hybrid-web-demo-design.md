@@ -5,7 +5,7 @@
 이 설계 문서는 `똑똑용돈`의 첫 MVP를 만들기 위한 기준이다. 목표는 완성형 서비스가 아니라 발표에서 핵심 플라이휠이 끊김 없이 보이는 세로 데모를 완성하는 것이다.
 
 ```text
-역할 선택 -> 자녀 미션 설정 -> 시니어 미션 완료 -> 포인트 증가 -> 가족 대시보드 -> AI 리포트
+역할 선택 -> 부모님 미션 선택 및 보상 설정 -> 시니어 미션 완료 -> 포인트 증가 -> 가족 대시보드 -> AI 리포트
 ```
 
 구현은 Flutter cross-platform 앱을 우선한다. 첫 검증과 발표는 Chrome에서 Flutter Web으로 진행하지만, 구조는 Galaxy/Android와 iPhone/iOS 빌드로 확장할 수 있게 둔다.
@@ -28,7 +28,7 @@
 
 - Flutter Web으로 실행 가능한 앱 구조
 - 역할 선택 화면
-- 자녀 미션/용돈 조건 설정 화면
+- 부모님 미션 선택 및 보상 설정 화면
 - 시니어 홈 화면
 - 미션 수행/완료 화면
 - 포인트 증가와 보상 상태 업데이트
@@ -83,7 +83,7 @@ app/
 
 ```text
 역할 선택
-  -> 자녀: 미션/용돈 조건 설정
+  -> 자녀: 부모님 미션 선택 및 용돈 조건 설정
   -> 시니어: 오늘의 미션 확인
   -> 미션 수행/완료
   -> 포인트 증가 및 보상 상태 업데이트
@@ -97,13 +97,19 @@ app/
 - `시니어로 시작`
 - 발표 중 빠른 전환을 위한 역할 변경 진입
 
-### 자녀 미션 설정 화면
+### 부모님 미션 선택 및 보상 설정 화면
 
-- 이번 주 미션 제목
-- 미션 설명
-- 완료 시 보상 포인트
-- 목표 포인트
-- 기본값 제공: 기억 퀴즈 1회 완료 시 100포인트
+- 앱에 미리 등록된 미션 카탈로그
+- 미션 유형 필터
+- 미션 카드의 제목, 설명, 예상 소요 시간, 기본 보상 포인트
+- 부모님에게 노출할 미션 선택/해제
+- 선택 개수 제한 없이 여러 미션 선택
+- 선택한 미션별 완료 보상 포인트
+- 이번 주 목표 포인트
+- 목표 달성 시 용돈 보상 조건
+- `부모님에게 적용하기` 버튼
+
+이 화면은 새로운 미션을 만드는 입력 폼이 아니다. 자녀가 앱의 기본 미션 중 부모님에게 보여줄 활동을 골라 적용하는 화면이다.
 
 ### 시니어 홈 화면
 
@@ -137,18 +143,12 @@ app/
 ```text
 DemoState
   selectedRole
-  mission
-    id
-    title
-    description
-    rewardPoints
-    targetPoints
-  completion
-    id
-    missionId
-    isCompleted
-    completedAt
-    responseSummary
+  missionCatalog: List<MissionTemplate>
+  assignedMissions: List<AssignedMission>
+  completions: List<MissionCompletion>
+  rewardPolicy
+    weeklyTargetPoints
+    allowanceCondition
   reward
     currentPoints
     targetPoints
@@ -167,7 +167,8 @@ Firestore 전환 시 예상 문서 구조:
 ```text
 users/{userId}
 families/{familyId}
-missions/{missionId}
+missionTemplates/{missionTemplateId}
+assignedMissions/{assignedMissionId}
 missionCompletions/{completionId}
 rewardStatuses/{seniorUserId_period}
 aiReports/{reportId}
@@ -178,8 +179,8 @@ aiReports/{reportId}
 ```text
 DemoRepository
   loadState()
-  saveMission()
-  completeMission()
+  applySelectedMissions()
+  completeMission(assignedMissionId)
   generateReport()
   resetDemo()
 
@@ -245,7 +246,7 @@ FallbackAiReportService
 
 - `flutter run -d chrome`
 - 역할 선택 화면 진입 확인
-- 자녀 미션 설정 저장 확인
+- 여러 부모님 미션 선택 및 적용 확인
 - 시니어 미션 완료 후 포인트 증가 확인
 - 새로고침 후 상태 유지 확인
 - 가족 대시보드에서 리포트 카드 표시 확인
@@ -270,4 +271,3 @@ FallbackAiReportService
 - API key가 없거나 호출 실패 시 fallback 리포트가 보인다.
 - API key가 코드, Git, local storage에 남지 않는다.
 - 나중에 Firestore와 backend proxy로 옮길 수 있는 repository/service 경계가 유지된다.
-

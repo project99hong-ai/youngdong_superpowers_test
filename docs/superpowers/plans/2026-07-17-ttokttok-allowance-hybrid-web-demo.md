@@ -2,11 +2,26 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the first `똑똑용돈` MVP as a Flutter cross-platform app that runs in Chrome for the first demo and shows the vertical flow: role selection, child mission setup, senior mission completion, point increase, family dashboard, and AI/fallback report.
+**Goal:** Build the first `똑똑용돈` MVP as a Flutter cross-platform app that runs in Chrome for the first demo and shows the vertical flow: role selection, parent mission catalog multi-select, senior mission completion, point increase, family dashboard, and AI/fallback report.
 
-**Architecture:** Create a Flutter app under `app/` and keep UI, repository, storage, and AI services separated. The first MVP stores demo state in browser/app-local storage, but models and repository methods are shaped so a later Firestore repository can replace the local implementation. AI report generation uses an `AiReportService` boundary with direct API calling for the local demo and fallback report generation when the key is missing or the call fails.
+**Architecture:** Create a Flutter app under `app/` and keep UI, repository, storage, and AI services separated. The first MVP stores demo state in browser/app-local storage, but models and repository methods are shaped so a later Firestore repository can replace the local implementation. A built-in mission catalog is multi-selected without a count limit, converted into assigned missions for the senior, and tracked with per-mission completions. AI report generation uses an `AiReportService` boundary with fallback behavior when the proxy call is unavailable or fails.
 
 **Tech Stack:** Flutter, Dart, Flutter Web/Chrome, `shared_preferences`, `http`, `flutter_test`, local storage through repository/service boundaries, direct AI API key injection through `--dart-define`.
+
+## 최신 제품 결정: 미션 카탈로그와 제한 없는 다중 선택
+
+이 결정은 이 계획에 남아 있는 기존 단일 미션 입력 폼 예시보다 우선합니다. 자녀는 새로운 미션을 직접 만들거나 제목·설명을 입력하지 않습니다. 앱에 기본 등록된 미션 카탈로그에서 부모님에게 보여줄 미션을 원하는 만큼 선택하고, `부모님에게 적용하기`로 저장합니다.
+
+구현에서는 다음 개념을 사용합니다.
+
+- `MissionTemplate`: 제목, 유형, 설명, 예상 소요 시간을 가진 기본 미션 정의
+- `AssignedMission`: 특정 부모님에게 노출하기로 선택된 미션과 미션별 보상 포인트
+- `MissionCompletion`: `assignedMissionId`를 기준으로 한 개별 수행 기록
+- `RewardPolicy`: 선택된 미션 묶음의 주간 목표 포인트와 용돈 보상 조건
+- `DemoState.missionCatalog`, `DemoState.assignedMissions`, `DemoState.completions`는 단일 값이 아닌 컬렉션
+- `saveMission()`은 `applySelectedMissions()`로 교체하고, 이후 화면 작업 전에 단일 미션 모델·테스트·UI 예시를 다중 선택 구조로 재작성
+
+The task snippets below were written for the earlier single-mission draft. They are not executable until Tasks 2, 3, and 6 are rewritten around the collection model above; do not copy the old single-mission fields or input form into production code.
 
 ## Global Constraints
 

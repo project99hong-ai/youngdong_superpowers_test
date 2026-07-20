@@ -39,12 +39,22 @@
 - Open API 호출은 `Cloud Functions` 같은 backend proxy를 통해서만 한다.
 - API 실패, 네트워크 오류, proxy 오류에 대비해 fallback mock/rule-based report를 반드시 둔다.
 
+### 최신 미션 운영 결정
+
+- 자녀는 미션을 직접 생성하지 않는다.
+- 앱에 미리 등록된 `MissionTemplate` 목록에서 부모님에게 보여줄 미션을 여러 개 선택한다.
+- 선택 개수에는 제한이 없다.
+- 선택된 미션은 `AssignedMission`으로 부모님 화면에 노출된다.
+- 보상 포인트와 이번 주 목표 포인트, 용돈 보상 조건은 선택된 미션 묶음에 적용한다.
+- 화면명은 `자녀 미션 설정`보다 `부모님 미션 선택 및 보상 설정`을 사용한다.
+- 미션 예시는 기억력 게임, 가벼운 두뇌 활동, 식사 여부 체크, 물 마시기 체크, 기분 체크, 산책·외출 체크, 안부 보내기다.
+
 ## 5. MVP 데모 흐름
 
 다음 흐름이 끊기지 않고 보여야 한다.
 
 1. 자녀가 시작 화면에서 `자녀` 역할을 선택한다.
-2. 자녀가 부모님에게 이번 주 미션과 용돈 보상 조건을 설정한다.
+2. 자녀가 미션 카탈로그에서 부모님에게 보여줄 미션을 여러 개 선택하고 이번 주 용돈 보상 조건을 설정한다.
 3. 시니어가 시작 화면에서 `시니어` 역할을 선택한다.
 4. 시니어가 오늘의 미션을 확인한다.
 5. 시니어가 체크인 또는 인지 활동 미션을 완료한다.
@@ -58,7 +68,7 @@
 
 - Flutter 프로젝트 구조 생성
 - 시작 화면: `시니어` / `자녀` 역할 선택
-- 자녀 화면: 미션/용돈 조건 설정
+- 자녀 화면: 미션 카탈로그에서 여러 미션 선택 및 용돈 조건 설정
 - 시니어 화면: 오늘의 미션, 참여 현황, 포인트/보상 상태
 - 미션 완료 흐름: 체크인 또는 간단한 인지 활동 1개 이상
 - local persistence: 역할, 미션 완료, 포인트, 보상 상태 저장
@@ -103,8 +113,10 @@ MVP에서는 mock/local persistence로 시작해도 된다.
 
 - `User`: id, role, displayName, familyId
 - `FamilyLink`: id, seniorUserId, childUserId, relationship, permissionLevel
-- `Mission`: id, title, type, description, rewardPoints, estimatedMinutes
-- `MissionCompletion`: id, missionId, seniorUserId, completedAt, score/responseSummary, earnedPoints
+- `MissionTemplate`: id, title, type, description, estimatedMinutes
+- `AssignedMission`: id, missionTemplateId, seniorUserId, isVisible, rewardPoints, appliedAt
+- `MissionCompletion`: id, assignedMissionId, seniorUserId, completedAt, score/responseSummary, earnedPoints
+- `RewardPolicy`: id, seniorUserId, weeklyTargetPoints, allowanceCondition, allowanceStatus
 - `RewardStatus`: id, seniorUserId, period, targetPoints, currentPoints, allowanceStatus
 - `AIReport`: id, seniorUserId, period, summary, changePoints, recommendations, generatedAt
 
